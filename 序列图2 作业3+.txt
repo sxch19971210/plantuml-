@@ -1,0 +1,56 @@
+@startuml
+scale 2
+skinparam sequenceArrowThickness 2
+skinparam sequenceMessageAlign center
+participant "User Agent" as A
+participant "Clent" as B
+participant "Resourca Server" as C
+participant "Authonsaton Sanver" as D
+participant "ldentity Provider" as E
+activate A #FFFF00
+activate B #FFFF00
+A -[#blue]> B :<color blue>GET ClenURL 
+B -[#blue]> A :<color blue>MAaln View
+A -[#Red]> B :<color red>GET/B/GetRnsoure
+deactivate A
+activate C #FFFF00
+B -[#Red]> C :<color red>GET apiRasource
+C -[#Red]> B :<color red>Urautherised
+deactivate C
+activate A #FFFF00
+B -[#Red]> A :<color red>Redireet + SAML Request
+deactivate B
+activate E #FFFF00
+A -[#Red]> E :<color red>GET/AutnRequest + SAML Request
+E -[#Red]> A :<color red>Login View
+A -[#blue]> E :<color blue>POST Cmderials
+E -[#blue]> A :<color blue>ClientRedirect View (embedded SAML Response)
+deactivate E
+activate B #FFFF00
+A -[#Red]> B :<color red>POST/AuthnResponse + SAML Response
+B -[#Red]> A :<color red>OAuthRedrect View (embedded SAML Response)
+deactivate B
+activate D #FFFF00
+A -[#blue]> D :<color blue>POST/SAMLAutherize + SAML Response
+D -[#blue]> A :<color blue>Redirect to Authontzn
+A -[#blue]> D :<color blue>GET/Authonze
+D -[#blue]> A :<color blue>Authorize View
+A -[#Red]> D :<color red>POST /Authorize
+D -[#Red]> A :<color red>Radinscito OAuthRedrect + Authorization Code
+activate B #FFFF00
+A -[#Red]> B :<color red>GET/ClentOAuthRedrect+Authorization Code
+B -[#Red]> D :<color red>GET/OAuth/Toker + Authorization Code
+D -[#Red]> B :<color red>OAuth Access Tokan
+B -[#Red]> A :<color red>Redirect to Main
+A -[#Red]> B :<color red>GET/Clent/Main
+B -[#Red]> A :<color red>Main View
+deactivate B
+deactivate D
+activate C #FFFF00
+A -[#blue]> C :<color blue>GET/GetResourca + QAuth Access Token
+C -[#blue]> A :<color blue>Resource
+
+deactivate A
+deactivate C
+
+@enduml
