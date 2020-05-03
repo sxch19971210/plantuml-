@@ -1,2 +1,0 @@
-# -
-IT’S my HOMEWORK
